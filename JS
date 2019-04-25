@@ -1,0 +1,7 @@
+1.判断字符串中某个字符出现的次数（.split()）
+  var a = 'zxcvbnmz';
+  //字母z在字符串中出现的次数为n次。
+  var n = a.split('z').length-1;   // 2
+2.判断字符串中某个字符是否唯一(.indexOf()&.lastIndexOf())
+  var a = 'zxcvbnmz';
+  var result = a.indexOf('z') ===a.lastIndexOf('z')?'YES':'NO';   //"NO"
