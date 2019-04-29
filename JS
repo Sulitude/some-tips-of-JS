@@ -5,3 +5,88 @@
 2.判断字符串中某个字符是否唯一(.indexOf()&.lastIndexOf())
   var a = 'zxcvbnmz';
   var result = a.indexOf('z') ===a.lastIndexOf('z')?'YES':'NO';   //"NO"
+3.（字符串）交替拆分  
+Take every 2nd char from the string, then the other chars, that are not every 2nd char, and concat them as new String.
+Do this n times!
+
+Examples:
+          "This is a test!", 1 -> "hsi  etTi sats!"
+          "This is a test!", 2 -> "hsi  etTi sats!" -> "s eT ashi tist!"
+
+（正则）
+function encrypt(text, n) {
+	for (let i = 0; i < n; i++) {
+  	text = text && text.replace(/.(.|$)/g, '$1') + text.replace(/(.)./g, '$1') 
+  }
+  return text
+}
+
+function decrypt(text, n) {
+	let l = text && text.length / 2 | 0
+	for (let i = 0; i < n; i++) {
+  	text = text.slice(l).replace(/./g, (_, i) => _ + (i < l ? text[i] : ''))
+  }
+  return text
+}
+（for循环）
+function encrypt(text, n) {
+  console.log(text, n);
+  if (!text || n <= 0) return text; 
+  while (n--) {
+    let ans = '';
+    for (let i = 1; i < text.length; i += 2) {
+      ans += text[i];
+    }
+    for (let i = 0; i < text.length; i += 2) {
+      ans += text[i];
+    }
+    text = ans;
+  }
+  return text;
+}
+
+function decrypt(encryptedText, n) {
+  if (!encryptedText || n <= 0) return encryptedText;
+  const ans = new Array(encryptedText.length);
+  while (n--) {
+    let j = 0;
+    for (let i = 1; i < ans.length; i += 2) {
+      ans[i] = encryptedText[j++];
+    }
+    for (let i = 0; i < ans.length; i += 2) {
+      ans[i] = encryptedText[j++];
+    }
+    encryptedText = ans.join('');
+  }
+  return encryptedText;
+}
+
+4.正则表达式中嵌入对象及其方法
+
+var arr = ['#','!'];
+
+var reg = new RegExp("\\s?[" + arr.join('') + "].*", "gi");
+//等同于
+var reg = /\s?[#!].*/gi;
+5.数组.replace(searchvalue,newvalue)中第二个参数为函数时的函数参数介绍
+
+
+
+
+var sStr='讨论一下正则表达式中的replace的用法';
+sStr.replace(/(正则).+?(式)/,function() {
+    console.log(arguments);
+});
+// ["正则表达式", "正则", "式", 4, "讨论一下正则表达式中的replace的用法"]
+
+ 
+
+参数分别为：
+
+ 1   匹配到的字符串（此例为"正则表达式")
+
+ 2   如果正则使用了分组匹配就为多个否则无此参数。（此例的参数就分别为 "正则", "式"）
+
+ 3   匹配字符串的对应索引位置（也就是"正则表达式"的索引位置，此例为4）
+
+ 4   原始字符串
