@@ -12,3 +12,25 @@ v-if 也是惰性的：如果在初始渲染时条件为假，则什么也不做
 v-show 仅是隐藏 / 显示，值为 false 时，该元素依旧存在于 dom 树中。若其原有样式设置了 display: none 则会导致其无法正常显示。）
 
 一般来说，v-if 有更高的切换消耗而 v-show 有更高的初始渲染消耗。因此，如果需要频繁切换 v-show 较好，如果在运行时条件不大可能改变 v-if 较好。
+
+
+2.
+
+router-link 默认情况下的路由是模糊匹配，例如当前路径是 /article/1 那么也会激活 <router-link to="/article">，所以当设置 exact-active-class 以后，这个 router-link 只有在当前路由被全包含匹配时才会被激活 exact-active-class 中的class。
+
+例如
+
+<router-link to="/article" active-class="router-active"></router-link>
+
+当用户访问 /article/1 时会被激活为
+
+<a href="#/article" class="router-active"></a>
+
+而当使用
+
+<router-link to="/article" exact-active-class="router-active"></router-link>
+
+当用户访问 /article/1 时，不会激活这个link的class
+
+<a href="#/article"></a>
+
