@@ -1,0 +1,12 @@
+1.git中进入带有空格的目录
+
+例：要进入Program Files目录下 有两种方法：
+
+(1)、将Program Files目录用引号引起来。
+
+$ cd "Program Files"
+
+(2)、将空格处使用空格引号
+
+$ cd Program" "Files
+
