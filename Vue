@@ -34,3 +34,104 @@ router-link 默认情况下的路由是模糊匹配，例如当前路径是 /art
 
 <a href="#/article"></a>
 
+3.
+      混入：mixins
+
+一种分发Vue组件中可反复使用的功能的方法。
+
+混入对象可以：包含任意组件选项。
+
+混入对象的选项将被混入该组件本身的选项。
+
+    如果有同名选项，在和组件的数据发生冲突时，组件数据优先。混入数据被丢弃。
+
+ 
+全局混入：Vue.minin({...})  ⚠️谨慎使用。
+
+会影响到每个单独创建的Vue实例。
+
+// 为自定义的选项 'myOption' 注入一个处理器。
+// created是实例初始化后的钩子：
+Vue.mixin({
+  created: function () {
+    var myOption = this.$options.myOption 　　//$options得到所有选项。
+    if (myOption) {
+      console.log(myOption)
+    }
+  }
+})
+
+new Vue({
+  myOption: 'hello!'　　　　　//这是给实例的自定义属性
+
+})
+// => "hello!
+
+选项／组合
+mixins: [object] 
+
+接受一个混入对象的数组。
+
+比如声明一个变量hook，这个变量是一个钩子方法。通过minins: [hook], 可以把这个变量hook放入new Vue({})中。
+
+ 
+extends：Object | Function
+
+用于声明扩展另一个组件。无需使用Vue.extend。主要为了方便扩展单文件组件xxx.vue
+
+例子：
+
+var CompA = { ... } 　　　　//一个对象
+
+var CompB = { 　　　　　　//在没有调用 Vue.extends的时候继承 CompA
+
+   extends: CompA, ...
+
+}
+
+ 
+
+ 
+全局API
+Vue.extend(options)，
+用基础构造器，创建一个‘子类’。这个类被实例化后就是一个Vue实例。但没有挂载.
+
+options是 {object}, 组件选项
+
+    data: function() {  return ... }
+    template: '<p>...</p>'  
+
+例子：
+
+var Profile = Vue.extend({ ...})  　　#创建构造器
+
+new Profile().$mount("#元素🆔")    #创建Profile实例，挂载到一个元素上。
+
+new Profile({ el: '#元素🆔'})　　　　#等同于加上el选项。
+
+new Profile().$mount()　　　　　　#没加参数，相当于新建了一组元素。尚未插入到DOM文档.
+
+ 
+
+ 
+实例方法／生命周期
+
+created和mounted区别：
+  created:在模板渲染成html前调用，即通常初始化某些属性值，然后再渲染成视图。
+  mounted:在模板渲染成html后调用，通常是初始化页面完成后，再对html的dom节点进行一些需要的操作。
+  
+  在created的时候，视图中的html并没有渲染出来，所以此时如果直接去操作html的dom节点，一定找不到相关的元素
+而在mounted中，由于此时html已经渲染出来了，所以可以直接操作dom节点。
+
+vm.$mount([element或者Selector])
+
+如果Vue实例在实例化的时候没有收到el选项，则它处于未挂载状态，没有关联DOM元素。
+
+使用$mount()手动挂载到一个元素上。
+
+返回： 实例本身。所以可以用链式调用其他实例方法。
+
+ 
+ 
+实例属性
+vm.$options  得到所有选项。
